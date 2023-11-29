@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yellow Pages Ludhiana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #ffcc00;
+            padding: 1em;
+            text-align: center;
+        }
+
+        section#search {
+            text-align: center;
+            margin: 20px;
+        }
+
+        section#search input {
+            padding: 10px;
+            width: 300px;
+        }
+
+        section#search button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        section#categories {
+            text-align: center;
+            margin: 20px;
+        }
+
+        section#categories button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        section#categories select {
+            padding: 10px;
+            display: none;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+        }
+
+        section#results {
+            margin: 20px;
+        }
+
+        section.listing {
+            background-color: white;
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 15px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Yellow Pages Ludhiana</h1>
+    </header>
+
+    <section id="search">
+        <img src="2.jpg">
+        <hr>
+        <input type="text" id="searchInput" placeholder="Search...">
+        <button onclick="search()">Search</button>
+    </section>
+
+    <section id="categories">
+        <button onclick="toggleDropdown('hotels')">Places to Eat</button>
+        <select id="hotels" onchange="search()">
+            <option value="hotel1">Hotels</option>
+            <option value="hotel2">Restraunts</option>
+            <option value="hotel3">Cafes</option>
+            <option value="hotel4">Dhabas</option>
+            
+        </select>
+
+        <button onclick="toggleDropdown('places')">Tourist Places</button>
+        <select id="places" onchange="search()">
+            <option value="place1">Malls</option>
+            <option value="place2">Temples</option>
+            <option value="place3">Gurudwaras</option>
+            <option value="place4">Heritage sites</option>
+            
+        </select>
+    </section>
+
+ 
+
+    <footer>
+        <p>&copy; 2023 Yellow Pages Ludhiana</p>
+    </footer>
+
+    <script>
+        function search() {
+            // we need backend for this
+            
+            // Get the selected category
+            const selectedCategory = document.getElementById('categories').querySelector('select:enabled').value;
+
+            // Redirect to a different page based on the selected category
+            switch (selectedCategory) {
+                case 'place1':
+                    window.location.href = 'malls.html';
+                    break;
+                case 'place2':
+                    window.location.href = 'temples.html';
+                    break;
+                case 'place3':
+                    window.location.href = 'gurudwaras.html';
+                    break;
+                case 'place4':
+                    window.location.href = 'heritage-sites.html';
+                    break;
+                case 'hotel1':
+                    window.location.href = 'hotels.html';
+                    break;
+                case 'hotel2':
+                    window.location.href = 'restaurants.html';
+                    break;
+                case 'hotel3':
+                    window.location.href = 'cafes.html';
+                    break;
+                case 'hotel4':
+                    window.location.href = 'dhabas.html';
+                    break;
+                
+
+                default:
+                    
+            }
+        }
+
+        function toggleDropdown(category) {
+            // Hide all dropdowns
+            document.querySelectorAll('select').forEach((dropdown) => {
+                dropdown.style.display = 'none';
+            });
+
+            // Show the dropdown for the selected category below its button
+            const button = document.querySelector(`button[onclick="toggleDropdown('${category}')"]`);
+            const dropdown = document.getElementById(category);
+
+            if (button && dropdown) {
+                const buttonRect = button.getBoundingClientRect();
+                dropdown.style.top = `${buttonRect.bottom}px`;
+                dropdown.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

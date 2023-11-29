@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .invoice {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .invoice-header {
+            text-align: center;
+        }
+        .invoice-header h1 {
+            font-size: 24px;
+        }
+        .invoice-details {
+            margin-top: 20px;
+        }
+        .invoice-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .invoice-details table, .invoice-details th, .invoice-details td {
+            border: 1px solid #333;
+        }
+        .invoice-details th, .invoice-details td {
+            padding: 8px;
+            text-align: left;
+        }
+        .invoice-details th {
+            background-color: #333;
+            color: #fff;
+        }
+        .invoice-details tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .invoice-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+        <div class="invoice-header">
+            <h1>Invoice</h1>
+        </div>
+        <div class="invoice-details">
+            <table>
+                <tr>
+                    <th>Invoice Number</th>
+                    <td>001</td>
+                </tr>
+                <tr>
+                    <th>Date</th>
+                    <td id="invoiceDate"></td>
+                </tr>
+
+                <tr>
+                    <th>Bill To</th>
+                    <td>Your Company Name<br>123 Main Street<br>City, State, Zip Code<br>Email: your@email.com<br>Phone: (123) 456-7890</td>
+                </tr>
+                <tr>
+                    <th>Ship To</th>
+                    <td>Client Company Name<br>456 Elm Street<br>City, State, Zip Code<br>Email: client@email.com<br>Phone: (987) 654-3210</td>
+                </tr>
+            </table>
+        </div>
+        <div class="invoice-details">
+            <table>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <td>Product 1</td>
+                    <td><input type="number" id="quantity1" value="2" oninput="updateProductTotal(1)"></td>
+                    <td><input type="number" id="price1" value="50.00" oninput="updateProductTotal(1)"></td>
+                    <td id="total1">$100.00</td>
+                </tr>
+                <tr>
+                    <td>Product 2</td>
+                    <td><input type="number" id="quantity2" value="3" oninput="updateProductTotal(2)"></td>
+                    <td><input type="number" id="price2" value="30.00" oninput="updateProductTotal(2)"></td>
+                    <td id="total2">$90.00</td>
+                </tr>
+            </table>
+        </div>
+        <div class="invoice-footer">
+            <p><strong>Subtotal:</strong> $<span id="subtotal">190.00</span></p>
+            <p><strong>GST (10%):</strong> $<span id="gst">19.00</span></p>
+            <p><strong>Total:</strong> $<span id="invoiceTotal">209.00</span></p>
+        </div>
+    </div>
+
+    <script>
+        function setInvoiceDate() {
+            var invoiceDateInput = document.getElementById("invoiceDateInput");
+            var invoiceDateElement = document.getElementById("invoiceDate");
+            var selectedDate = new Date(invoiceDateInput.value);
+            invoiceDateElement.textContent = selectedDate.toDateString();
+        }
+
+        function updateProductTotal(productNumber) {
+            var quantity = parseFloat(document.getElementById("quantity" + productNumber).value);
+            var price = parseFloat(document.getElementById("price" + productNumber).value);
+            var total = quantity * price;
+            document.getElementById("total" + productNumber).textContent = "$" + total.toFixed(2);
+            updateInvoiceTotals();
+        }
+
+        function updateInvoiceTotals() {
+            var total1 = parseFloat(document.getElementById("total1").textContent.slice(1));
+            var total2 = parseFloat(document.getElementById("total2").textContent.slice(1));
+            var subtotal = total1 + total2;
+            var gst = subtotal * 0.1;
+            var invoiceTotal = subtotal + gst;
+
+            document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+            document.getElementById("gst").textContent = gst.toFixed(2);
+            document.getElementById("invoiceTotal").textContent = invoiceTotal.toFixed(2);
+        }
+
+        
+            // JavaScript to set the invoice date dynamically
+            var currentDate = new Date();
+            var invoiceDateElement = document.getElementById("invoiceDate");
+            invoiceDateElement.textContent = currentDate.toDateString();
+        
+    
+    </script>
+</body>
+</html>
