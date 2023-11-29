@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tax Calculator</h1>
+    
+    <label for="monthlyIncome">Enter your monthly income (₹):</label>
+    <input type="number" id="monthlyIncome" placeholder="Enter monthly income" />
+
+    <label for="hraPercentage">HRA Percentage (%):</label>
+    <input type="number" id="hraPercentage" placeholder="Enter HRA percentage" />
+
+    <label for="daPercentage">DA Percentage (%):</label>
+    <input type="number" id="daPercentage" placeholder="Enter DA percentage" />
+
+    <label for="trafficAllowancePercentage">Traffic Allowance Percentage (%):</label>
+    <input type="number" id="trafficAllowancePercentage" placeholder="Enter Traffic Allowance percentage" />
+
+    <label for="gender">Select your gender:</label>
+    <select id="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+
+    <button onclick="calculateTax()">Calculate Tax</button>
+
+    <p>Your tax is: ₹<span id="tax	">0.00</span></p>
+    <p>Your final income after tax is: ₹<span id="finalIncome">0.00</span></p>
+
+    <script>
+        function calculateTax() {
+            const monthlyIncome = parseFloat(document.getElementById("monthlyIncome").value);
+            const hraPercentage = parseFloat(document.getElementById("hraPercentage").value);
+            const daPercentage = parseFloat(document.getElementById("daPercentage").value);
+            const trafficAllowancePercentage = parseFloat(document.getElementById("trafficAllowancePercentage").value);
+            const gender = document.getElementById("gender").value;
+            
+            const annualIncome = monthlyIncome * 12 * (1 + (hraPercentage / 100) + (daPercentage / 100) + (trafficAllowancePercentage / 100));
+            
+            let taxRate;
+            if (annualIncome <= 500000) {
+                taxRate = 0;
+            } else if (annualIncome <= 1000000) {
+                taxRate = 0.10; // 10%
+            } else if (annualIncome <= 1500000) {
+                taxRate = 0.20; // 20%
+            } else {
+                taxRate = 0.30; // 30%
+            }
+
+            // Decrease tax rate by 5% for females
+            if (gender === 'female') {
+                taxRate -= 0.05; // 5%
+            }
+            
+            const tax = annualIncome * taxRate;
+            const finalIncome = annualIncome - tax;
+            
+            document.getElementById("tax").textContent = tax.toFixed(2);
+            document.getElementById("finalIncome").textContent = finalIncome.toFixed(2);
+        }
+    </script>
+</body>
+</html>
+
